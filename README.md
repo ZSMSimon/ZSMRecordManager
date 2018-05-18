@@ -1,7 +1,7 @@
 # [ZSMRecordManager](https://github.com/ZSMSimon/ZSMRecordManager.git)
 
 ## 简介
-###iOS录音功能集成:
+### iOS录音功能集成:
 * 实时获取录音状态、录音长度、录音声波强度、录音分贝；
 * 自定义录音文件名称、录音地址；
 * 权限判断；
