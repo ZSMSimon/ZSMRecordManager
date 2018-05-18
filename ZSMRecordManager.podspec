@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.license       = { :type => "MIT", :file => "LICENSE" }
   s.author        = { "Simon" => "18320832089@163.com" }
   s.platform      = :ios, "8.0"
-  s.source        = { :git => "https://github.com/ZSMSimon/ZSMRecordManager.git", :tag => "1.0.0" }
+  s.source        = { :git => "https://github.com/ZSMSimon/ZSMRecordManager.git", :tag => s.version.to_s }
   s.requires_arc  = true
-  s.source_files  = "ZSMRecordManager/ZSMRecordManager/RecordManager/*.{h,m}"
+  s.source_files  = "RecordManager/*.{h,m}"
 end
