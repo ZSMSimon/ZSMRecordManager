@@ -160,6 +160,7 @@
         //设置为播放和录制状态，以便在录制完成之后播放录音
         NSError *sessionError;
         [_audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:&sessionError];
+        [_audioSession setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&sessionError];
         
         if (_audioSession == nil) {
             NSLog(@"Error creating session: %@",[sessionError description]);
@@ -188,6 +189,8 @@
     }
     
     _audioRecorder = [[AVAudioRecorder alloc] initWithURL:url settings:self.audioSettion error:error];
+    _audioRecorder.delegate = self;
+    _audioRecorder.meteringEnabled = YES;
     
     if (_audioRecorder && [_audioRecorder prepareToRecord]) {
         
@@ -219,6 +222,8 @@
     _filePathURL = [NSURL fileURLWithPath:_filePath];
     
     _audioRecorder = [[AVAudioRecorder alloc] initWithURL:_filePathURL settings:self.audioSettion error:error];
+    _audioRecorder.delegate = self;
+    _audioRecorder.meteringEnabled = YES;
     
     if (_audioRecorder && [_audioRecorder prepareToRecord]) {
         
@@ -358,17 +363,18 @@
 //定时器方法
 - (void)audioPowerChange {
     
-    [self.audioRecorder updateMeters];  //更新测量值
-    
-    float power = [self.audioRecorder averagePowerForChannel:0]; //取得第一个通道的音频，注意音频强度范围时-160到0
-    
-    self.audioDB = [RecordingManager dbAudioPowerConversion:power];
-    
-    self.powerProgress = (1.0/160)*(power+160);
-    
-    self.currentTime = self.audioRecorder.currentTime;
-    
     if (self.recordingBlock) {
+        
+        [self.audioRecorder updateMeters];  //更新测量值
+        
+        CGFloat power = [self.audioRecorder averagePowerForChannel:0]; //取得第一个通道的音频，注意音频强度范围时-160到0
+        
+        self.audioDB = [RecordingManager dbAudioPowerConversion:power];
+        
+        self.powerProgress = (1.0/160)*(power+160);
+        
+        self.currentTime = self.audioRecorder.currentTime;
+        
         self.recordingBlock(self.currentTime, self.powerProgress,self.audioDB);
     }
 }

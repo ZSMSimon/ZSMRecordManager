@@ -60,7 +60,7 @@ typedef void(^RecordCallBackBlock)(NSTimeInterval,CGFloat,int);
 @property (nonatomic, assign, readonly) NSTimeInterval currentTime;
 
 /** 录音声波状态 */
-@property (nonatomic, assign, readonly) CGFloat audioPowerProgress;
+@property (nonatomic, assign, readonly) CGFloat powerProgress;
 
 /** 录音的分贝 */
 @property (nonatomic, assign, readonly) int audioDB;
